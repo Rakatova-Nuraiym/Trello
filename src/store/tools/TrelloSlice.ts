@@ -1,24 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { NewDataProps, todo } from "../../type";
+import { Trello, TypePatch, todo } from "../../type";
 import axios from "axios";
 
-interface RequestsProps {
-  newData: {
-    _id: number;
-    values: [
-      {
-        _id: number;
-        title: string;
-
-        newComment: [
-          {
-            comment: string;
-            _id: number;
-          }
-        ];
-      }
-    ];
-  };
+export interface NewDataProps {
+  name: string;
 }
 
 const initialState: todo = {
@@ -55,7 +40,7 @@ export const getTrello = createAsyncThunk("trello/get", async () => {
 
 export const patchTrello = createAsyncThunk(
   "todo/patch",
-  async ({ newData, _id }: RequestsProps) => {
+  async ({ newData, _id }: { newData: TypePatch; _id: number }) => {
     const response = await axios.patch(`${url}/${_id}`, newData);
     return response.data;
   }
@@ -63,7 +48,9 @@ export const patchTrello = createAsyncThunk(
 
 export const patchComment = createAsyncThunk(
   "todo/patchCommet",
-  async ({ newData, _id }: RequestsProps) => {
+  async ({ newData, _id }: { newData: TypePatch; _id: number }) => {
+    console.log(newData);
+
     const response = await axios.patch(`${url}/${_id}`, newData);
     return response.data;
   }
@@ -71,7 +58,9 @@ export const patchComment = createAsyncThunk(
 // !put
 export const putTrello = createAsyncThunk(
   "todo/put",
-  async ({ newData, _id }: RequestsProps) => {
+  async ({ newData, _id }: { newData: TypePatch; _id: number }) => {
+    console.log(newData);
+
     const response = await axios.put(`${url}/${_id}`, newData);
     return response.data;
   }
@@ -81,7 +70,6 @@ const TrelloSlice = createSlice({
   name: "trello",
   initialState,
   reducers: {},
-
   extraReducers: (builder) => {
     builder
       .addCase(postTrello.fulfilled, (state, actions) => {

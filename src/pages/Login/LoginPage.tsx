@@ -57,13 +57,15 @@ const LoginPage = () => {
     const findUder = user.find(
       (item) => item.name === name && +item.login === +login
     );
+    
     if (findUder) {
-      navigate("/");
-      localStorage.setItem("isAuth", findUder._id);
+      navigate("/"); 
+      localStorage.setItem("isAuth", "" + findUder._id);
     } else {
       alert("iljn;n");
     }
   };
+  
 
   const Singn_in = () => {
     navigate("/registration");

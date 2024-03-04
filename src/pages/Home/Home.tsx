@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import scss from "./home.module.scss";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import {
@@ -10,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { NewDataProps } from "../../type";
+// import { NewDataProps } from "../../type";
 import {
   ButtonD,
   EditDiv,
@@ -24,17 +25,35 @@ import {
   TitleDiv,
 } from "./HomeStyle";
 import Modal from "./Modal/Modal";
+// import { TypePatchArray } from "../../type";
 
 interface NewItem {
   title: string;
   _id: number;
 }
 
+// interface Trello {
+
+//   name: string;
+//   values: [
+//     {
+//       title: string;
+//       _id: number;
+//       newComment: [
+//         {
+//           comment: string;
+//           _id: number;
+//         }
+//       ];
+//     }
+//   ];
+// }
+
 const Home = () => {
   const todo = useAppSelector((state) => state.TrelloSlice.todo);
 
   const dispatch = useAppDispatch();
-  const [test, setTest] = useState(false);
+  const [test, setTest] = useState<boolean | number>(false);
 
   // ! useStatesx
   const [value, setValue] = useState("");
@@ -52,15 +71,19 @@ const Home = () => {
   const [modal, setModal] = useState(false);
   const [modalOpen, setOpenModal] = useState<null | number>(null);
 
-  const openModal = (newItem) => {
-    setOpenModal(newItem._id);
+  const openModal = () => {
     setModal(true);
   };
 
+  const CloseModal = () => {
+    setOpenModal(null);
+    setModal(false);
+    console.log("eferg");
+  };
   // ! post
   const postReq = () => {
     if (value !== "") {
-      const newData: NewDataProps = {
+      const newData = {
         name: value,
         values: [],
       };
@@ -107,8 +130,17 @@ const Home = () => {
     setEdit(newItem._id);
   };
 
-  const editFunc = (_id: number, name: string, values: NewItem, id: number) => {
-    const newValues = values.map((el) => {
+  const editFunc = (
+    _id: number,
+    name: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    values: any,
+    id: number
+  ) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const newValues = values.map((el: any) => {
       if (el._id !== id) {
         return el;
       }
@@ -141,18 +173,21 @@ const Home = () => {
   const addComment = (
     _id: number,
     name: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     item: any,
     title: string,
-    newItem: string
+    newItem: any
   ) => {
     const newData = {
       name: name,
       values: [
+        ...item.values,
         {
           title,
           newComment: [
             ...newItem.newComment,
             {
+              // comment,
               comment: comment,
               _id: Math.random(),
             },
@@ -162,11 +197,6 @@ const Home = () => {
     };
     dispatch(patchComment({ newData, _id }));
     setModal(false);
-  };
-  const CloseModal = () => {
-    setOpenModal(null);
-    setModal(false);
-    console.log("eferg");
   };
 
   return (
@@ -222,8 +252,8 @@ const Home = () => {
                         <>
                           <TitleDiv
                             onClick={() => {
-                              openModal(newItem);
-                              // setOpenModal(newItem._id);
+                              openModal();
+                              setOpenModal(newItem._id);
                             }}
                           >
                             {newItem.title}

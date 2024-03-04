@@ -19,9 +19,23 @@ export interface Trello {
 export interface todo {
   todo: Trello[];
 }
-
-export interface NewDataProps {
+//              patch
+export interface TypePatch {
   name: string;
+  values: TypePatchArray[];
+}
 
-  values: [];
+export interface TypePatchArray {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  map(arg0: (el: any) => any): unknown;
+  title: string;
+  _id: number;
+  newComment: TypePutValues[];
+}
+
+//              path
+
+export interface TypePutValues {
+  title: string;
+  _id: number;
 }

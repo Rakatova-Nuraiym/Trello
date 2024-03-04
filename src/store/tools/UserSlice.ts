@@ -12,14 +12,24 @@ export interface user {
   user: User[];
 }
 
+export interface NewDataProps {
+  name: string;
+  login: string;
+  img: string;
+}
+
 const urlUser =
   "https://api.elchocrud.pro/api/v1/35f867a88e75929d40f56904e46f893b/usersTrello";
 
 // !postUser
-export const postUser = createAsyncThunk("todo/postUses", async (newData) => {
-  const response = await axios.post(urlUser, newData);
-  return response.data;
-});
+export const postUser = createAsyncThunk(
+  "todo/postUses",
+  async (newData: NewDataProps) => {
+    const response = await axios.post(urlUser, newData);
+    return response.data;
+  }
+);
+
 export const getUser = createAsyncThunk("todo/getUses", async () => {
   const response = await axios.post(urlUser);
   return response.data;

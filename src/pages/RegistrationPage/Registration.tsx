@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAppDispatch } from "../../store/store";
-import { User, postUser } from "../../store/tools/UserSlice";
+import {  postUser } from "../../store/tools/UserSlice";
 
 const MainDiv2 = styled.div`
   display: flex;
@@ -47,6 +47,7 @@ const Registration = () => {
       const newData = {
         name,
         login,
+        img,
       };
 
       dispatch(postUser(newData));

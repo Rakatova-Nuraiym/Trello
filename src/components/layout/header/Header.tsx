@@ -83,10 +83,14 @@ const Header = () => {
 
   const [imgDiv, setImgDiv] = useState(false);
   const userId = +localStorage.getItem("isAuth")!;
+  console.log(user);
+  
+
+    
   const getUserId = () => {
     const find = user.find((item) => item._id === userId);
-    console.log(find);
-
+    console.log(find?.img);
+    
     if (find) {
       console.log(find);
       setUserId(find.img);
