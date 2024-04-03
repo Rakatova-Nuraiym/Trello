@@ -1,3 +1,4 @@
+import { FC, ReactNode } from "react";
 import styled from "styled-components";
 
 export const ModalDiv = styled.div`
@@ -22,7 +23,13 @@ export const MiniModal = styled.div`
   z-index: 3;
 `;
 
-const Modal = ({ isOpen, children }) => {
+interface Trello {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  isOpen: any;
+  children: ReactNode;
+}
+
+const Modal: FC<Trello> = ({ isOpen, children }) => {
   if (!isOpen) {
     return null;
   }
