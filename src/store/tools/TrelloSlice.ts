@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Trello, TypePatch, todo } from "../../type";
+import { TypePatch, todo } from "../../type";
 import axios from "axios";
 
 export interface NewDataProps {
